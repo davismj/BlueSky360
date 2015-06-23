@@ -55,7 +55,8 @@ var ext = 'ogg';
 // foundation track
 var found,
 	foundXhr = new XMLHttpRequest();
-foundXhr.open("GET", 'audio/Blue Sky Foundation.' + ext, true);
+// foundXhr.open("GET", 'audio/Blue Sky Foundation.' + ext, true);
+foundXhr.open("GET", "http://api.soundcloud.com/tracks/211485459/stream?client_id=1de9477cd9d5dcc1b9eb3e35eb0f1a5e&secret_token=s-vGRpQ", true);
 try {
 	foundXhr.responseType = "arraybuffer";
 }
@@ -73,7 +74,8 @@ foundXhr.send();
 // lead track
 var lead,
 	leadXhr = new XMLHttpRequest();
-leadXhr.open("GET", 'audio/Blue Sky Lead.' + ext, true);
+// leadXhr.open("GET", 'audio/Blue Sky Lead.' + ext, true);
+leadXhr.open("GET", "http://api.soundcloud.com/tracks/211483609/stream?client_id=1de9477cd9d5dcc1b9eb3e35eb0f1a5e&secret_token=s-FVB0E", true);
 try {
 	leadXhr.responseType = "arraybuffer";	
 }
