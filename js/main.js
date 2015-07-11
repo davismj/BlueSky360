@@ -8,6 +8,7 @@ audio.listener.setPosition(0,0,0);
 
 var main = audio.createGain();
 main.gain.value = 1.0;
+main.connect(audio.destination);
 
 var lopass = audio.createBiquadFilter();
 lopass.type = 'lowpass';
@@ -106,10 +107,13 @@ var player,
 		    	onPlay: function onPlay() {
 		    		document.getElementById('main')
 		    			.className = 'playing';
+					foundSource.start(0);
+					leadSource.start(0);	
 				},
 		        onPause: function onPause() { 
 		    		document.getElementById('main')
 		    			.className = 'paused';
+					main.disconnect();
 				},
 				onEnded: function onEnded() {
 		    		document.getElementById('main')
@@ -139,13 +143,7 @@ function updateAudio() {
 	var time = player.getCurrentTime();
 
 	// if not playing, disconnect audio 
-	if (!player.isPlaying())// || failCount > 1)
-		main.disconnect();
-	
-	else {
-
-		// otherwise, connect the audio?
-		main.connect(audio.destination);
+	if (player.isPlaying()) {
 
 		// grab pitch, yaw, and time
 		var pitch = getRadians(player.getPitch());
@@ -183,12 +181,10 @@ function connectAudio(time) {
 
 	foundSource = audio.createBufferSource();
 	foundSource.buffer = found;
-	foundSource.start(0);
 	foundSource.connect(foundVolume);
-
+	
 	leadSource = audio.createBufferSource();
 	leadSource.buffer = lead;
-	leadSource.start(0);	
 	leadSource.connect(leadVolume);
 }
 
