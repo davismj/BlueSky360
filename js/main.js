@@ -8,7 +8,6 @@ audio.listener.setPosition(0,0,0);
 
 var main = audio.createGain();
 main.gain.value = 1.0;
-main.connect(audio.destination);
 
 var lopass = audio.createBiquadFilter();
 lopass.type = 'lowpass';
@@ -107,13 +106,12 @@ var player,
 		    	onPlay: function onPlay() {
 		    		document.getElementById('main')
 		    			.className = 'playing';
-					foundSource.start(0);
-					leadSource.start(0);	
+					main.connect(audio.destination);
 				},
 		        onPause: function onPause() { 
 		    		document.getElementById('main')
 		    			.className = 'paused';
-					main.disconnect();
+	    			main.disconnect();
 				},
 				onEnded: function onEnded() {
 		    		document.getElementById('main')
@@ -181,11 +179,15 @@ function connectAudio(time) {
 
 	foundSource = audio.createBufferSource();
 	foundSource.buffer = found;
+	foundSource.loop = true;
 	foundSource.connect(foundVolume);
+	foundSource.start();
 	
 	leadSource = audio.createBufferSource();
 	leadSource.buffer = lead;
+	leadSource.loop = true;
 	leadSource.connect(leadVolume);
+	leadSource.start();
 }
 
 function getPannerOrientation(theta) {
