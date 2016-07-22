@@ -116,7 +116,7 @@ var player,
 				onEnded: function onEnded() {
 		    		document.getElementById('main')
 		    			.className = 'ended';
-	    			connectAudio();
+	    			main.disconnect();
 				},
 		        onVolumeChange: function onVolumeChange() {
 					main.gain.value = player.getVolume();
